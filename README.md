@@ -1,37 +1,7 @@
 
-# Causal ML: A Python Package for Uplift Modeling and Causal Inference with ML
+# causalml-data： 生成个性化激励模拟数据的工具
 
 我要把它变成了一个快速生成模拟数据的项目；
-
-**Causal ML** is a Python package that provides a suite of uplift modeling and causal inference methods using machine learning algorithms based on recent
-research [[1]](#Literature). It provides a standard interface that allows user to estimate the Conditional Average Treatment Effect (CATE) or Individual Treatment
- Effect (ITE) from experimental or observational data. Essentially, it estimates the causal impact of intervention `T` on outcome `Y` for users
- with observed features `X`, without strong assumptions on the model form. Typical use cases include
-
-* **Campaign targeting optimization**: An important lever to increase ROI in an advertising campaign is to target the ad to the set of customers who will have a favorable response in a given KPI such as engagement or sales. CATE identifies these customers by estimating the effect of the KPI from ad exposure at the individual level from A/B experiment or historical observational data.
-
-* **Personalized engagement**: A company has multiple options to interact with its customers such as different product choices in up-sell or messaging channels for communications. One can use CATE to estimate the heterogeneous treatment effect for each customer and treatment option combination for an optimal personalized recommendation system.
-
-The package currently supports the following methods
-
-* **Tree-based algorithms**
-    * Uplift tree/random forests on KL divergence, Euclidean Distance, and Chi-Square [[2]](#Literature)
-    * Uplift tree/random forests on Contextual Treatment Selection [[3]](#Literature)
-    * Causal Tree [[4]](#Literature) - Work-in-progress
-* **Meta-learner algorithms**
-    * S-learner [[5]](#Literature)
-    * T-learner [[5]](#Literature)
-    * X-learner [[5]](#Literature)
-    * R-learner [[6]](#Literature)
-    * Doubly Robust (DR) learner [[7]](#Literature)
-    * TMLE learner [[8]](#Literature)
-* **Instrumental variables algorithms**
-    * 2-Stage Least Squares (2SLS)
-    * Doubly Robust (DR) IV [[9]](#Literature)
-* **Neural-network-based algorithms**
-    * CEVAE [[10]](#Literature)
-    * DragonNet [[11]](#Literature) - with `causalml[tf]` installation (see [Installation](#installation))
-
 
 # Installation
 
@@ -178,6 +148,37 @@ This project is licensed under the Apache 2.0 License - see the [LICENSE](https:
 # References
 
 ## Documentation
+
+
+**Causal ML** is a Python package that provides a suite of uplift modeling and causal inference methods using machine learning algorithms based on recent
+research [[1]](#Literature). It provides a standard interface that allows user to estimate the Conditional Average Treatment Effect (CATE) or Individual Treatment
+ Effect (ITE) from experimental or observational data. Essentially, it estimates the causal impact of intervention `T` on outcome `Y` for users
+ with observed features `X`, without strong assumptions on the model form. Typical use cases include
+
+* **Campaign targeting optimization**: An important lever to increase ROI in an advertising campaign is to target the ad to the set of customers who will have a favorable response in a given KPI such as engagement or sales. CATE identifies these customers by estimating the effect of the KPI from ad exposure at the individual level from A/B experiment or historical observational data.
+
+* **Personalized engagement**: A company has multiple options to interact with its customers such as different product choices in up-sell or messaging channels for communications. One can use CATE to estimate the heterogeneous treatment effect for each customer and treatment option combination for an optimal personalized recommendation system.
+
+The package currently supports the following methods
+
+* **Tree-based algorithms**
+    * Uplift tree/random forests on KL divergence, Euclidean Distance, and Chi-Square [[2]](#Literature)
+    * Uplift tree/random forests on Contextual Treatment Selection [[3]](#Literature)
+    * Causal Tree [[4]](#Literature) - Work-in-progress
+* **Meta-learner algorithms**
+    * S-learner [[5]](#Literature)
+    * T-learner [[5]](#Literature)
+    * X-learner [[5]](#Literature)
+    * R-learner [[6]](#Literature)
+    * Doubly Robust (DR) learner [[7]](#Literature)
+    * TMLE learner [[8]](#Literature)
+* **Instrumental variables algorithms**
+    * 2-Stage Least Squares (2SLS)
+    * Doubly Robust (DR) IV [[9]](#Literature)
+* **Neural-network-based algorithms**
+    * CEVAE [[10]](#Literature)
+    * DragonNet [[11]](#Literature) - with `causalml[tf]` installation (see [Installation](#installation))
+
 * [Causal ML API documentation](https://causalml.readthedocs.io/en/latest/about.html)
 
 ## Conference Talks and Publications by CausalML Team
