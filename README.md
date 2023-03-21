@@ -74,7 +74,7 @@ slearner = BaseSRegressor(LGBMRegressor(), control_name='control')
 slearner.estimate_ate(X, w_multi, y)
 slearner_tau = slearner.fit_predict(X, w_multi, y)
 
-model_tau_feature = RandomForestRegressor()  # specify model for model_tau_feature
+model_tau_feature = RandomForestRegressor()  # spe下一个cify model for model_tau_feature
 
 slearner.get_importance(X=X, tau=slearner_tau, model_tau_feature=model_tau_feature,
                         normalize=True, method='auto', features=feature_names)
