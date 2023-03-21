@@ -1,6 +1,7 @@
 import logging
 
 import numpy as np
+import scipy
 from scipy.special import expit, logit
 
 logger = logging.getLogger("causalml")
@@ -52,6 +53,42 @@ def synthetic_data(mode=1, n=1000, p=5, sigma=1.0, adj=0.0):
         1: simulate_nuisance_and_easy_treatment,
         2: simulate_randomized_trial,
         3: simulate_easy_propensity_difficult_baseline,
+        4: simulate_unrelated_treatment_control,
+        5: simulate_hidden_confounder,
+    }
+
+    assert mode in catalog, "Invalid mode {}. Should be one of {}".format(
+        mode, set(catalog)
+    )
+    return catalog[mode](n, p, sigma, adj)
+
+
+def synthetic_data(mode=1, n=1000, p=5, sigma=1.0, adj=0.0):
+    """ Synthetic IV data
+    Args:
+        mode (int, optional): mode of the simulation: \
+            1 ...
+            2 ...
+            3 工具变量连续 treatment
+        n (int, optional): number of observations
+        p (int optional): number of covariates (>=5)
+        sigma (float): standard deviation of the error term
+        adj (float): adjustment term for the distribution of propensity, e. Higher values shift the distribution to 0.
+                     It does not apply to mode == 2 or 3.
+    Returns:
+        (tuple): Synthetically generated samples with the following outputs:
+            - y ((n,)-array): outcome variable.
+            - X ((n,p)-ndarray): independent variables.
+            - w ((n,)-array): treatment flag with value 0 or 1.
+            - tau ((n,)-array): individual treatment effect.
+            - b ((n,)-array): expected outcome.
+            - e ((n,)-array): propensity of receiving treatment.
+    """
+
+    catalog = {
+        1: simulate_nuisance_and_easy_treatment,
+        2: simulate_randomized_trial,
+        3: simulate_continuous_treatment,
         4: simulate_unrelated_treatment_control,
         5: simulate_hidden_confounder,
     }
@@ -225,3 +262,33 @@ def simulate_hidden_confounder(n=10000, p=5, sigma=1.0, adj=0.0):
     y_t0, y_t1 = expit(3 * (z + 2 * (2 * t0_t1 - 2)))
     tau = y_t1 - y_t0
     return y, X, w, tau, b, e
+
+
+def simulate_continuous_treatment(n=1000, p=5, binary_treatment=False):
+    """Synthetic iv data with continuous treatment.
+    """
+    X = np.random.normal(0, 1, size=(n, p))
+    Z = np.random.binomial(1, 0.5, size=(n,))
+    nu = np.random.uniform(0, 5, size=(n,))
+    coef_Z = 0.8
+    C = np.random.binomial(
+        1, coef_Z * scipy.special.expit(0.4 * X[:, 0] + nu)
+    )  # Compliers when recomended
+    C0 = np.random.binomial(
+        1, 0.006 * np.ones(X.shape[0])
+    )  # Non-compliers when not recommended
+    T = C * Z + C0 * (1 - Z)
+    if not binary_treatment:
+        cost = lambda X: 10 * X[:, 1] ** 2
+        T = cost(X) * T
+
+    true_fn = lambda X: X[:, 0] + 0.5 * X[:, 1] + 0.5 * X[:, 2]
+    tau = true_fn(X)
+
+    y = (
+            true_fn(X) * T  # 这里意味着 outcome 关于 treatment 是线性的
+            + 2 * nu
+            + 5 * (X[:, 3] > 0)
+            + 0.1 * np.random.uniform(0, 1, size=(n,))
+    )
+    return y, X, T, tau, Z
