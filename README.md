@@ -1,20 +1,7 @@
-<div align="center">
-  <a href="https://github.com/uber/causalml"><img width="380px" height="140px" src="https://raw.githubusercontent.com/uber/causalml/master/docs/_static/img/logo/causalml_logo.png"></a>
-</div>
-
-------------------------------------------------------
-
-[![PyPI Version](https://badge.fury.io/py/causalml.svg)](https://pypi.org/project/causalml/)
-[![Build Status](https://github.com/uber/causalml/actions/workflows/python-test.yaml/badge.svg)](https://github.com/uber/causalml/actions/workflows/python-test.yaml)
-[![Documentation Status](https://readthedocs.org/projects/causalml/badge/?version=latest)](http://causalml.readthedocs.io/en/latest/?badge=latest)
-[![Downloads](https://pepy.tech/badge/causalml)](https://pepy.tech/project/causalml)
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3015/badge)](https://bestpractices.coreinfrastructure.org/projects/3015)
-
-
-# Disclaimer
-This project is stable and being incubated for long-term support. It may contain new experimental code, for which APIs are subject to change.
 
 # Causal ML: A Python Package for Uplift Modeling and Causal Inference with ML
+
+我要把它变成了一个快速生成模拟数据的项目；
 
 **Causal ML** is a Python package that provides a suite of uplift modeling and causal inference methods using machine learning algorithms based on recent
 research [[1]](#Literature). It provides a standard interface that allows user to estimate the Conditional Average Treatment Effect (CATE) or Individual Treatment

@@ -5,6 +5,24 @@ from scipy.special import expit, logit
 
 logger = logging.getLogger("causalml")
 
+"""
+上述代码中定义了五个函数，分别对应了五种不同的生成模拟数据的方法：
+
+simulate_nuisance_and_easy_treatment()：这种方法生成的数据，包含了难以处理的干扰项和容易估计的处理效应。它是根据 Nie X. 和 Wager S. (2018) 的 "Quasi-Oracle Estimation of Heterogeneous Treatment Effects" 中的 Setup A 生成的。
+
+simulate_randomized_trial()：这种方法生成的数据，模拟了一个随机试验。它是根据 Nie X. 和 Wager S. (2018) 的 "Quasi-Oracle Estimation of Heterogeneous Treatment Effects" 中的 Setup B 生成的。
+
+simulate_easy_propensity_difficult_baseline()：这种方法生成的数据，模拟了一个易于估计的倾向得分和一个难以估计的基线。它是根据 Nie X. 和 Wager S. (2018) 的 "Quasi-Oracle Estimation of Heterogeneous Treatment Effects" 中的 Setup C 生成的。
+
+simulate_unrelated_treatment_control()：这种方法生成的数据，模拟了一个不相关的处理和对照组。它是根据 Nie X. 和 Wager S. (2018) 的 "Quasi-Oracle Estimation of Heterogeneous Treatment Effects" 中的 Setup D 生成的。
+
+simulate_hidden_confounder()：这种方法生成的数据，模拟了一个隐藏的混淆变量对处理造成偏倚的情况。它是根据 Louizos et al. (2018) 的 "Causal Effect Inference with Deep Latent-Variable Models" 生成的。
+
+这些函数的输出都是一个包含六个元素的元组，分别为 y（因变量）、X（自变量）、w（处理）、tau（处理效应）、b（期望结果）和 e（处理得分）。
+
+通过选择不同的 mode 参数值，我们可以使用这些函数生成不同的模拟数据，用于评估不同的因果推断方法的性能。
+"""
+
 
 def synthetic_data(mode=1, n=1000, p=5, sigma=1.0, adj=0.0):
     """ Synthetic data in Nie X. and Wager S. (2018) 'Quasi-Oracle Estimation of Heterogeneous Treatment Effects'
@@ -64,10 +82,10 @@ def simulate_nuisance_and_easy_treatment(n=1000, p=5, sigma=1.0, adj=0.0):
 
     X = np.random.uniform(size=n * p).reshape((n, -1))
     b = (
-        np.sin(np.pi * X[:, 0] * X[:, 1])
-        + 2 * (X[:, 2] - 0.5) ** 2
-        + X[:, 3]
-        + 0.5 * X[:, 4]
+            np.sin(np.pi * X[:, 0] * X[:, 1])
+            + 2 * (X[:, 2] - 0.5) ** 2
+            + X[:, 3]
+            + 0.5 * X[:, 4]
     )
     eta = 0.1
     e = np.maximum(
@@ -163,9 +181,9 @@ def simulate_unrelated_treatment_control(n=1000, p=5, sigma=1.0, adj=0.0):
 
     X = np.random.normal(size=n * p).reshape((n, -1))
     b = (
-        np.maximum(np.repeat(0.0, n), X[:, 0] + X[:, 1] + X[:, 2])
-        + np.maximum(np.repeat(0.0, n), X[:, 3] + X[:, 4])
-    ) / 2
+                np.maximum(np.repeat(0.0, n), X[:, 0] + X[:, 1] + X[:, 2])
+                + np.maximum(np.repeat(0.0, n), X[:, 3] + X[:, 4])
+        ) / 2
     e = 1 / (1 + np.exp(-X[:, 0]) + np.exp(-X[:, 1]))
     e = expit(logit(e) - adj)
     tau = np.maximum(np.repeat(0.0, n), X[:, 0] + X[:, 1] + X[:, 2]) - np.maximum(

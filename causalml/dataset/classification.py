@@ -2,6 +2,23 @@ import numpy as np
 import pandas as pd
 from sklearn.datasets import make_classification
 
+"""
+具体来说，该函数基于sklearn包中的make_classification方法，生成一个基本的分类数据集。然后，该函数通过添加正面Uplift和负面Uplift特征来模拟Uplift效应。正面Uplift特征会增加基本分类标签的值，负面Uplift特征会降低分类标签的值。
+函数还可以为每个处理组分别指定正面和负面Uplift特征的数量和大小。除此之外，该函数还可以创建混合特征，这些特征是基本分类特征和Uplift特征的线性组合。
+下面是函数中一些重要参数的数学公式：
+- n_samples: 生成的每个处理组的样本数量
+- n_classification_features: 生成的基本分类特征的数量
+- n_classification_informative: 基本分类特征中具有信息量的数量
+- n_classification_redundant: 基本分类特征中的冗余数量
+- n_classification_repeated: 基本分类特征中的重复数量
+- n_uplift_increase_dict: 正面Uplift特征的数量
+- n_uplift_decrease_dict: 负面Uplift特征的数量
+- delta_uplift_increase_dict: 正面Uplift特征的增益大小
+- delta_uplift_decrease_dict: 负面Uplift特征的降低大小
+- n_uplift_increase_mix_informative_dict: 正面Uplift和基本分类特征的混合特征数量
+- n_uplift_decrease_mix_informative_dict: 负面Uplift和基本分类特征的混合特征数量
+- positive_class_proportion: 生成数据集中正类的比例
+"""
 
 def make_uplift_classification(
     n_samples=1000,
