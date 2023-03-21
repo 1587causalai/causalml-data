@@ -63,7 +63,7 @@ def synthetic_data(mode=1, n=1000, p=5, sigma=1.0, adj=0.0):
     return catalog[mode](n, p, sigma, adj)
 
 
-def synthetic_data(mode=1, n=1000, p=5, sigma=1.0, adj=0.0):
+def synthetic_iv_data(mode=1, n=1000, p=5, sigma=1.0, adj=0.0):
     """ Synthetic IV data
     Args:
         mode (int, optional): mode of the simulation: \
