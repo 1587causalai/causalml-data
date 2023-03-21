@@ -277,10 +277,12 @@ def simulate_continuous_treatment(n=1000, p=5, binary_treatment=False):
     C0 = np.random.binomial(
         1, 0.006 * np.ones(X.shape[0])
     )  # Non-compliers when not recommended
-    T = C * Z + C0 * (1 - Z)
+    tmp_T = C * Z + C0 * (1 - Z)
     if not binary_treatment:
         cost = lambda X: 10 * X[:, 1] ** 2
-        T = cost(X) * T
+        T = cost(X) * tmp_T
+    else:
+        T = tmp_T
 
     true_fn = lambda X: X[:, 0] + 0.5 * X[:, 1] + 0.5 * X[:, 2]
     tau = true_fn(X)
