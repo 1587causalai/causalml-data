@@ -53,14 +53,14 @@ extensions = [
 packages = find_packages(exclude=["tests", "tests.*"])
 
 setup(
-    name="causalml",
+    name="causaldata",
     version=causalml.__version__,
     author="Huigang Chen, Totte Harinen, Jeong-Yoon Lee, Yuchen Luo, Jing Pan, Mike Yung, Zhenyu Zhao",
     author_email="",
-    description="Python Package for Uplift Modeling and Causal Inference with Machine Learning Algorithms",
+    description="生成各种 causal 数据",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/uber/causalml",
+    url=" https://github.com/1587causalai/causalml-data.git",
     packages=packages,
     python_requires=">=3.7",
     classifiers=[
