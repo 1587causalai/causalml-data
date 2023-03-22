@@ -1,6 +1,7 @@
 import logging
 
 import numpy as np
+import pandas as pd
 import scipy
 from scipy.special import expit, logit
 
@@ -23,8 +24,23 @@ simulate_hidden_confounder()：这种方法生成的数据，模拟了一个隐�
 
 通过选择不同的 mode 参数值，我们可以使用这些函数生成不同的模拟数据，用于评估不同的因果推断方法的性能。
 """
-
-
+def to_dataframe(func):
+    def wrapper(*args, **kwargs):
+        dataframe = kwargs.pop("to_dataframe", False)
+        tmp = func(*args, **kwargs)
+        if dataframe:
+            y, X, w, tau, b, e = tmp
+            df = pd.DataFrame(X)
+            feature_names = [f'feature_{i}' for i in range(X.shape[1])]
+            df.columns = feature_names
+            df['outcome'] = y
+            df['treatment'] = w
+            df['treatment_effect'] = tau
+            return df
+        else:
+            return tmp
+    return wrapper
+@to_dataframe
 def synthetic_data(mode=1, n=1000, p=5, sigma=1.0, adj=0.0):
     """ Synthetic data in Nie X. and Wager S. (2018) 'Quasi-Oracle Estimation of Heterogeneous Treatment Effects'
     Args:
@@ -78,8 +94,7 @@ def synthetic_data_advanced(mode=1, n=1000, p=5, sigma=1.0, adj=0.0):
     )
     return catalog[mode](n, p, sigma, adj)
 
-
-
+@to_dataframe
 def synthetic_iv_data(mode=1, n=1000, p=5, sigma=1.0, adj=0.0):
     """ Synthetic IV data
     Args:
@@ -117,7 +132,8 @@ def synthetic_iv_data(mode=1, n=1000, p=5, sigma=1.0, adj=0.0):
 
 
 ## TODO 半合成数据
-def semi_synthetic_data(mode=1, n=1000, p=5, sigma=1.0, adj=0.0):
+@to_dataframe
+def semi_synthetic_data(mode=1, n=1000, p=5, sigma=1.0, adj=0.0, dataframe=False):
     """ 半合成数据"""
     catalog = {
         1: simulate_nuisance_and_easy_treatment,
@@ -132,6 +148,7 @@ def semi_synthetic_data(mode=1, n=1000, p=5, sigma=1.0, adj=0.0):
     )
     return catalog[mode](n, p, sigma, adj)
 
+@to_dataframe
 def simulate_nuisance_and_easy_treatment(n=1000, p=5, sigma=1.0, adj=0.0):
     """Synthetic data with a difficult nuisance components and an easy treatment effect
         From Setup A in Nie X. and Wager S. (2018) 'Quasi-Oracle Estimation of Heterogeneous Treatment Effects'
@@ -170,7 +187,7 @@ def simulate_nuisance_and_easy_treatment(n=1000, p=5, sigma=1.0, adj=0.0):
 
     return y, X, w, tau, b, e
 
-
+@to_dataframe
 def simulate_randomized_trial(n=1000, p=5, sigma=1.0, adj=0.0):
     """Synthetic data of a randomized trial
         From Setup B in Nie X. and Wager S. (2018) 'Quasi-Oracle Estimation of Heterogeneous Treatment Effects'
