@@ -26,9 +26,9 @@ simulate_hidden_confounder()：这种方法生成的数据，模拟了一个隐�
 """
 def to_dataframe(func):
     def wrapper(*args, **kwargs):
-        dataframe = kwargs.pop("to_dataframe", False)
+        output_dataframe = kwargs.pop("to_dataframe", False)
         tmp = func(*args, **kwargs)
-        if dataframe:
+        if output_dataframe:
             y, X, w, tau, b, e = tmp
             df = pd.DataFrame(X)
             feature_names = [f'feature_{i}' for i in range(X.shape[1])]
@@ -436,3 +436,5 @@ def simulate_foo():
     T = vg(np.dot(W[:, support_T], coefs_T)) + eta_sample(n)
     Y = TE * T + vm(np.dot(W[:, support_Y], coefs_Y)) + epsilon_sample(n)
     return Y, T, X, W, TE
+
+print(synthetic_data(mode=2, n=2, to_dataframe=True))
