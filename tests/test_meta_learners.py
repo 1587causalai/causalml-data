@@ -8,30 +8,30 @@ from xgboost import XGBRegressor
 from xgboost import XGBClassifier
 from sklearn.ensemble import RandomForestRegressor
 
-from causalml.dataset import synthetic_data
-from causalml.inference.meta import (
+from causaldata.dataset import synthetic_data
+from causaldata.inference.meta import (
     BaseSLearner,
     BaseSRegressor,
     BaseSClassifier,
     LRSRegressor,
 )
-from causalml.inference.meta import (
+from causaldata.inference.meta import (
     BaseTLearner,
     BaseTRegressor,
     BaseTClassifier,
     XGBTRegressor,
     MLPTRegressor,
 )
-from causalml.inference.meta import BaseXLearner, BaseXClassifier, BaseXRegressor
-from causalml.inference.meta import (
+from causaldata.inference.meta import BaseXLearner, BaseXClassifier, BaseXRegressor
+from causaldata.inference.meta import (
     BaseRLearner,
     BaseRClassifier,
     BaseRRegressor,
     XGBRRegressor,
 )
-from causalml.inference.meta import TMLELearner
-from causalml.inference.meta import BaseDRLearner
-from causalml.metrics import ape, get_cumgain
+from causaldata.inference.meta import TMLELearner
+from causaldata.inference.meta import BaseDRLearner
+from causaldata.metrics import ape, get_cumgain
 
 from .const import RANDOM_SEED, N_SAMPLE, ERROR_THRESHOLD, CONTROL_NAME, CONVERSION
 

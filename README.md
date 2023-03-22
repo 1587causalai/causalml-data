@@ -20,12 +20,12 @@ $ python setup.py install
 ## Average Treatment Effect Estimation with S, T, X, and R Learners
 
 ```python
-from causalml.inference.meta import LRSRegressor
-from causalml.inference.meta import XGBTRegressor, MLPTRegressor
-from causalml.inference.meta import BaseXRegressor
-from causalml.inference.meta import BaseRRegressor
+from causaldata.inference.meta import LRSRegressor
+from causaldata.inference.meta import XGBTRegressor, MLPTRegressor
+from causaldata.inference.meta import BaseXRegressor
+from causaldata.inference.meta import BaseRRegressor
 from xgboost import XGBRegressor
-from causalml.dataset import synthetic_data
+from causaldata.dataset import synthetic_data
 
 y, X, treatment, _, _, e = synthetic_data(mode=1, n=1000, p=5, sigma=1.0)
 
@@ -38,9 +38,9 @@ te, lb, ub = xg.estimate_ate(X, treatment, y)
 print('Average Treatment Effect (XGBoost): {:.2f} ({:.2f}, {:.2f})'.format(te[0], lb[0], ub[0]))
 
 nn = MLPTRegressor(hidden_layer_sizes=(10, 10),
-                 learning_rate_init=.1,
-                 early_stopping=True,
-                 random_state=42)
+                   learning_rate_init=.1,
+                   early_stopping=True,
+                   random_state=42)
 te, lb, ub = nn.estimate_ate(X, treatment, y)
 print('Average Treatment Effect (Neural Network (MLP)): {:.2f} ({:.2f}, {:.2f})'.format(te[0], lb[0], ub[0]))
 
@@ -49,7 +49,7 @@ te, lb, ub = xl.estimate_ate(X, treatment, y, e)
 print('Average Treatment Effect (BaseXRegressor using XGBoost): {:.2f} ({:.2f}, {:.2f})'.format(te[0], lb[0], ub[0]))
 
 rl = BaseRRegressor(learner=XGBRegressor(random_state=42))
-te, lb, ub =  rl.estimate_ate(X=X, p=e, treatment=treatment, y=y)
+te, lb, ub = rl.estimate_ate(X=X, p=e, treatment=treatment, y=y)
 print('Average Treatment Effect (BaseRRegressor using XGBoost): {:.2f} ({:.2f}, {:.2f})'.format(te[0], lb[0], ub[0]))
 ```
 
@@ -63,12 +63,12 @@ Causal ML provides methods to interpret the treatment effect models trained as f
 ### Meta Learner Feature Importances
 
 ```python
-from causalml.inference.meta import BaseSRegressor, BaseTRegressor, BaseXRegressor, BaseRRegressor
-from causalml.dataset.regression import synthetic_data
+from causaldata.inference.meta import BaseSRegressor, BaseTRegressor, BaseXRegressor, BaseRRegressor
+from causaldata.dataset.regression import synthetic_data
 
 # Load synthetic data
 y, X, treatment, tau, b, e = synthetic_data(mode=1, n=10000, p=25, sigma=0.5)
-w_multi = np.array(['treatment_A' if x==1 else 'control' for x in treatment]) # customize treatment/control names
+w_multi = np.array(['treatment_A' if x == 1 else 'control' for x in treatment])  # customize treatment/control names
 
 slearner = BaseSRegressor(LGBMRegressor(), control_name='control')
 slearner.estimate_ate(X, w_multi, y)
@@ -111,8 +111,8 @@ See the [feature interpretations example notebook](https://github.com/uber/causa
 
 ```python
 from IPython.display import Image
-from causalml.inference.tree import UpliftTreeClassifier, UpliftRandomForestClassifier
-from causalml.inference.tree import uplift_tree_string, uplift_tree_plot
+from causaldata.inference.tree import UpliftTreeClassifier, UpliftRandomForestClassifier
+from causaldata.inference.tree import uplift_tree_string, uplift_tree_plot
 
 uplift_model = UpliftTreeClassifier(max_depth=5, min_samples_leaf=200, min_samples_treatment=50,
                                     n_reg=100, evaluationFunction='KL', control_name='control')

@@ -1,9 +1,9 @@
 import pandas as pd
 import torch
 
-from causalml.inference.nn import CEVAE
-from causalml.dataset import simulate_hidden_confounder
-from causalml.metrics import get_cumgain
+from causaldata.inference.nn import CEVAE
+from causaldata.dataset import simulate_hidden_confounder
+from causaldata.metrics import get_cumgain
 
 
 def test_CEVAE():

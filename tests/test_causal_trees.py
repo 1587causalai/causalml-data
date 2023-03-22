@@ -4,9 +4,9 @@ import pandas as pd
 import pytest
 from sklearn.model_selection import train_test_split
 
-from causalml.inference.tree import CausalTreeRegressor, CausalRandomForestRegressor
-from causalml.metrics import ape
-from causalml.metrics import qini_score
+from causaldata.inference.tree import CausalTreeRegressor, CausalRandomForestRegressor
+from causaldata.metrics import ape
+from causaldata.metrics import qini_score
 from .const import RANDOM_SEED, ERROR_THRESHOLD
 
 

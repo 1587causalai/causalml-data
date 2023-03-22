@@ -1,4 +1,4 @@
-name: causalml-py39
+name: causaldata-py39
 channels:
   - defaults
 dependencies:
@@ -133,4 +133,4 @@ dependencies:
     - widgetsnbextension==3.5.1
     - wrapt==1.12.1
     - xgboost==1.4.1
-    - causalml>=0.10.0
+    - causaldata>=0.10.0

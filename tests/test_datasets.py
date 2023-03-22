@@ -1,17 +1,17 @@
 import pytest
 
-from causalml.dataset import (
+from causaldata.dataset import (
     simulate_nuisance_and_easy_treatment,
     simulate_hidden_confounder,
     simulate_randomized_trial,
 )
-from causalml.dataset import (
+from causaldata.dataset import (
     get_synthetic_preds,
     get_synthetic_summary,
     get_synthetic_auuc,
 )
-from causalml.dataset import get_synthetic_preds_holdout, get_synthetic_summary_holdout
-from causalml.inference.meta import LRSRegressor, XGBTRegressor
+from causaldata.dataset import get_synthetic_preds_holdout, get_synthetic_summary_holdout
+from causaldata.inference.meta import LRSRegressor, XGBTRegressor
 
 
 @pytest.mark.parametrize(

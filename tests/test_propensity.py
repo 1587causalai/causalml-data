@@ -1,9 +1,9 @@
-from causalml.propensity import (
+from causaldata.propensity import (
     ElasticNetPropensityModel,
     GradientBoostedPropensityModel,
     LogisticRegressionPropensityModel,
 )
-from causalml.metrics import roc_auc_score
+from causaldata.metrics import roc_auc_score
 
 
 from .const import RANDOM_SEED
