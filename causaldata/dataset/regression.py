@@ -437,4 +437,3 @@ def simulate_foo():
     Y = TE * T + vm(np.dot(W[:, support_Y], coefs_Y)) + epsilon_sample(n)
     return Y, T, X, W, TE
 
-print(synthetic_data(mode=2, n=2, to_dataframe=True))
