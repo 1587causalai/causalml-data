@@ -314,6 +314,8 @@ def simulate_hidden_confounder(n=10000, p=5, sigma=1.0, adj=0.0):
     return y, X, w, tau, b, e
 
 
+
+
 def simulate_continuous_treatment(n=1000, p=5, binary_treatment=False):
     """Synthetic iv data with continuous treatment.
     References: https://github.com/1587causalai/EconML/blob/75b40b6b07ee8aa49e0be75057b54e2458158284/notebooks/OrthoIV%20and%20DRIV%20Examples.ipynb
@@ -332,20 +334,20 @@ def simulate_continuous_treatment(n=1000, p=5, binary_treatment=False):
     tmp_T = C * Z + C0 * (1 - Z)
     if not binary_treatment:
         cost = lambda X: 10 * X[:, 1] ** 2
-        T = cost(X) * tmp_T
+        w = cost(X) * tmp_T
     else:
-        T = tmp_T
+        w = tmp_T
 
     true_fn = lambda X: X[:, 0] + 0.5 * X[:, 1] + 0.5 * X[:, 2]
     tau = true_fn(X)
 
     y = (
-            true_fn(X) * T  # 这里意味着 outcome 关于 treatment 是线性的
+            true_fn(X) * w  # 这里意味着 outcome 关于 treatment 是线性的
             + 2 * nu
             + 5 * (X[:, 3] > 0)
             + 0.1 * np.random.uniform(0, 1, size=(n,))
     )
-    return y, X, T, tau, Z
+    return y, X, w, tau, Z
 
 
 
